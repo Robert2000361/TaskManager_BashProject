@@ -2,13 +2,38 @@
 
 delete_task() {
 
-read -p "Enter ID: " id
-id_exists "$id" || { echo "ID not found"; return; }
+validate_file_structure || return
 
-read -p "Confirm delete (y/n): " c
-[ "$c" != "y" ] && return
+while true; do
 
-sed -i "/^$id|/d" "$FILE"
-echo "Deleted"
+    echo
+    read -p "Enter ID to delete (or press Enter to return): " id
+
+    # السماح بالرجوع للقائمة
+    [[ -z "$id" ]] && break
+
+    validate_existing_id "$id" || continue
+
+    # عرض التاسك قبل الحذف
+    task=$(grep "^$id|" "$FILE")
+    echo "Selected Task:"
+    echo "$task"
+
+    read -p "Confirm delete (y/n): " confirm
+    validate_confirmation "$confirm" || continue
+
+    if [[ $confirm == "y" ]]; then
+        sed -i "/^$id|/d" "$FILE"
+        success "Task deleted successfully"
+    else
+        echo "Delete cancelled"
+    fi
+
+    echo
+    read -p "Do you want to delete another task? (y/n): " again
+
+    [[ $again != "y" ]] && break
+
+done
 
 }
