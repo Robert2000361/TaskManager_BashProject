@@ -4,7 +4,7 @@ list_tasks() {
 
 validate_file_structure || return
 
-print_table_header
+#print_table_header
 
 # awk -F'|' '{
 # printf "| %-4s | %-30s | %-8s | %-10s | %-12s |\n",$1,$2,$3,$4,$5
@@ -34,5 +34,5 @@ BEGIN {
 
 print_table_footer
 
-print_table_footer
+#print_table_footer
 }
