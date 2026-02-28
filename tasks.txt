@@ -1,1 +1,5 @@
-1|fvd|low|2026-02-23|done
+1|Learning softskills|medium|2026-02-28|done
+2|Studying Leadership|low|2026-02-26|pending
+3|Being a DevOps|high|2026-03-01|pending
+4|mbgkf|low|2026-02-28|in-progress
+5|hey|low|2026-02-28|pending

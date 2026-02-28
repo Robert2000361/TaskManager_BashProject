@@ -47,7 +47,6 @@ while true; do
             }' "$output_file"
 
             # Print table footer
-            print_table_footer
 
             break
             ;;

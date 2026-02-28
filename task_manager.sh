@@ -1,4 +1,6 @@
 #!/bin/bash
+echoblue() { echo -e "\033[0;34m$*\033[0m"; }; echogreen() { echo -e "\033[0;32m$*\033[0m"; }; echoyellow() { echo -e "\033[0;33m$*\033[0m"; }; echopurple() { echo -e "\033[0;35m$*\033[0m"; }
+echored() { echo -e "\033[0;31m$*\033[0m"; }
 
 # ===== Load Environment =====
 source config.sh
@@ -10,71 +12,6 @@ source update_task.sh
 source delete_task.sh
 source search_task.sh
 source reports.sh
-
-# ===== Menu =====
-# PS3="Choose option: "
-
-# while true; do
-
-# echo "======================"
-# echo "      TASK MANAGER"
-# echo "======================"
-
-# select opt in "Add" "List" "Update" "Delete" "Search" "Reports" "Exit"
-# do
-# case $REPLY in
-
-# 1)
-#     add_task
-#     break
-# ;;
-
-# 2)
-#     list_tasks
-#     break
-# ;;
-
-# 3)
-#     update_task
-#     break
-# ;;
-
-# 4)
-#     delete_task
-#     break
-# ;;
-
-# 5)
-#     search_task
-#     break
-# ;;
-
-# 6)
-#     select r in "Summary" "Overdue" "Priority" "Back"
-#     do
-#         case $REPLY in
-#             1) summary_report ;;
-#             2) overdue_report ;;
-#             3) priority_report ;;
-#             4) break ;;
-#             *) echo "Invalid" ;;
-#         esac
-#     done
-#     break
-# ;;
-
-# 7)
-#     echo "Goodbye 👋"
-#     exit 0
-# ;;
-
-# *)
-#     echo "Invalid choice"
-# ;;
-
-# esac
-# done
-# done
 
 
 show_menu() {
@@ -91,21 +28,26 @@ while true; do
     read -p "Choose option: " choice
 
     if [[ -z "$choice" ]]; then
-        echo "❌ Please enter a number."
+        # echo "❌ Please enter a number."
+        echo -e "\033[0;31m❌ Please enter a number.\033[0m"
+
         continue
     fi
 
     case $choice in
         1) add_task ;;
-        2) list_tasks ;;
+        2) list_tasks ;; 
         3) update_task ;;
         4) delete_task ;;
         5) search_task ;;
         6) reports_menu ;;
         7) export_tasks_csv ;;
         8) exit 0 ;;
-        *) echo "❌ Invalid choice." ;;
+        # *) echo "❌ Invalid choice." ;;
+        *) echo -e "\033[0;31m❌ Invalid choice.\033[0m" ;;
+
     esac
 done
 }
 show_menu
+
