@@ -6,25 +6,46 @@ while true; do
     echo "===== Add Task ====="
 
 
-    # =========================
-    # Title validation
-    # =========================
-    while true; do
-        read -p "Enter Title: " title
+# =========================
+# Title validation (Smart)
+# =========================
+while true; do
+    read -p "Enter Title: " title
 
     # إزالة المسافات من البداية والنهاية
-        title=$(echo "$title" | xargs)
+    title=$(echo "$title" | xargs)
 
-        if [[ -z "$title" ]]; then
-            echo "❌ Title cannot be empty."
+    # 1️⃣ فارغ
+    if [[ -z "$title" ]]; then
+        echo "❌ Title cannot be empty or spaces only."
+        echo "👉 Example: Study Bash"
+        continue
+    fi
 
-        elif [[ ! "$title" =~ ^[a-zA-Z0-9][a-zA-Z0-9\ -]*$ ]]; then
-            echo "❌ Invalid title. Use letters, numbers, spaces or '-' only, and do not start with symbols."
+    # 2️⃣ يبدأ برقم أو رمز
+    if [[ ! "$title" =~ ^[a-zA-Z] ]]; then
+        echo "❌ Title must start with a letter."
+        echo "👉 Example: Fix bug"
+        continue
+    fi
 
-        else
-            break
-        fi
-    done
+    # 3️⃣ يحتوي رموز غير مسموح بها
+    if [[ ! "$title" =~ ^[a-zA-Z0-9\ -]+$ ]]; then
+        echo "❌ Title contains invalid characters."
+        echo "👉 Allowed: letters, numbers, spaces, -"
+        echo "👉 Example: Write report"
+        continue
+    fi
+
+    # 4️⃣ أرقام فقط بعد الحرف (مثلاً A123 فقط)
+    if [[ "$title" =~ ^[a-zA-Z]+[0-9]*$ ]] && [[ ! "$title" =~ [a-zA-Z]{2,} ]]; then
+        echo "❌ Title should be meaningful, not just letters with numbers."
+        echo "👉 Example: Task 1"
+        continue
+    fi
+
+    break
+done
 
     # =========================
     # Priority validation
